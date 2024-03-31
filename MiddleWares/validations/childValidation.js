@@ -5,8 +5,8 @@ exports.insertValidator = [
   body("fullname")
     .isString()
     .withMessage("child Name should be string")
-    .isLength({ min: 10 })
-    .withMessage("child Name should contain at least 10 chars"),
+    .isLength({ min: 2 })
+    .withMessage("child Name should contain at least 2 chars"),
   body("age").isInt().withMessage("child age should be integer"),
   body("level")
     .isIn(["PreKG", "KG1", "KG2"])
@@ -42,8 +42,8 @@ exports.updateValidator = [
     .optional()
     .isString()
     .withMessage("child Name should be string")
-    .isLength({ min: 4 })
-    .withMessage("child Name should contain at least 4 chars"),
+    .isLength({ min: 2 })
+    .withMessage("child Name should contain at least 2 chars"),
   body("age").optional().isInt().withMessage("child age should be integer"),
   body("level")
     .optional()

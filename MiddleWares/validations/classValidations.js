@@ -8,8 +8,8 @@ exports.insertValidator = [
   body("name")
     .isString()
     .withMessage("Class name should be a string")
-    .isLength({ min: 4 })
-    .withMessage("Class name should have a minimum length of 4 characters"),
+    .isLength({ min: 2 })
+    .withMessage("Class name should have a minimum length of 2 characters"),
   
   body("supervisor")
     .isMongoId()

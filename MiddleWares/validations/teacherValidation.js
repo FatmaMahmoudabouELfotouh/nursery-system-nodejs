@@ -4,8 +4,8 @@ exports.insertValidator = [
   body("fullname")
     .isString()
     .withMessage("Teacher fullName should be a string")
-    .isLength({ min: 4 })
-    .withMessage("Teacher fullName length should be greater than 4"),
+    .isLength({ min: 2 })
+    .withMessage("Teacher fullName length should be greater than 2"),
   
   body('password')
     .isLength({ min: 8 })
@@ -22,8 +22,8 @@ exports.updateValidator = [
     .optional()
     .isString()
     .withMessage("Teacher fullname should be a string")
-    .isLength({ min: 4 })
-    .withMessage("Teacher fullname length should be greater than 4"),
+    .isLength({ min: 2 })
+    .withMessage("Teacher fullname length should be greater than 2"),
     
   body('password')
     .optional()
