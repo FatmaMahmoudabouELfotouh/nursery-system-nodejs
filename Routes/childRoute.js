@@ -22,7 +22,7 @@ const router = express.Router();
  *       properties:
  *         _id:
  *           type: string
- *         name:
+ *         fullname:
  *           type: string
  *         age:
  *           type: integer
@@ -38,13 +38,10 @@ const router = express.Router();
  *               type: string
  *             building:
  *               type: string
- *         image:
- *           type: string
  *       required:
  *         - _id
  *         - name
  *         - age
- *         - parent
  */
 /**
  * @swagger
@@ -176,10 +173,10 @@ router.delete(
  */
 router.get(
   "/childerns/:id",
-  isAuth, // Ensure authentication
-  isAdmin, // Ensure user is admin 
-  getByIdValidator, // Validate request parameters for getting by ID
-  validator, // Run validation
+  isAuth, 
+  isAdmin, 
+  getByIdValidator, 
+  validator, 
   childController.findChildById
 );
 

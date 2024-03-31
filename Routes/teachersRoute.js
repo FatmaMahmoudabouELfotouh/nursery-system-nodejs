@@ -47,7 +47,7 @@ router
    *   get:
    *     security:
    *       - bearerAuth: []
-   *     description: Returns all teachers
+   *     description: Retrieve all teachers
    *     responses:
    *       200:
    *         description: A list of teachers
@@ -63,7 +63,7 @@ router
    * @swagger
    * /teachers:
    *   post:
-   *     description: add teacher
+   *     description: Add a new teacher
    *     security:
    *       - bearerAuth: []
    *     requestBody:
@@ -86,7 +86,7 @@ router
    *                 format: binary
    *     responses:
    *       200:
-   *         description: update teacher
+   *         description: The created teacher
    *         content:
    *           application/json:
    *             schema:
@@ -95,54 +95,8 @@ router
   .post(
     upload.single("image"),
     insertValidator,
-    validator, 
+    validator,
     teacherController.addTeacher
-  )
-  /**
-   * @swagger
-   * /teachers/{:_id}:
-   *   put:
-   *     description: update teacher
-   *     security:
-   *       - bearerAuth: []
-   *     parameters:
-   *       - in: path
-   *         name: id
-   *         required: true
-   *         description: ID of the teacher to update
-   *         schema:
-   *           type: string
-   *     requestBody:
-   *       required: true
-   *       content:
-   *         multipart/form-data:
-   *           schema:
-   *             type: object
-   *             properties:
-   *               fullname:
-   *                 type: string
-   *               password:
-   *                 type: string
-   *                 minLength: 8
-   *               email:
-   *                 type: string
-   *                 format: email
-   *               image:
-   *                 type: string
-   *                 format: binary
-   *     responses:
-   *       200:
-   *         description: update teacher
-   *         content:
-   *           application/json:
-   *             schema:
-   *               $ref: '#/components/schemas/Teacher'
-   */
-  router.put('/teachers/:id',
-    upload.single("image"),
-    isAuth,
-    isAdmin,
-    teacherController.updateTeacher
   )
   /**
    * @swagger
@@ -150,47 +104,89 @@ router
    *   delete:
    *     security:
    *       - bearerAuth: []
-   *     parameters:
-   *       - in: path
-   *         name: id
-   *     description: delete teacher
+   *     description: Delete a teacher
    *     responses:
    *       200:
-   *         description: delete teacher
-   *         content:
-   *           application/json:
-   *             schema:
-   *               type: array
-   *               items:
-   *                 $ref: '#/components/schemas/Teacher'
+   *         description: Teacher deleted successfully
    */
   .delete(isAuth, isAdmin, teacherController.deleteTeacher);
 
-// Get teacher by ID
 /**
  * @swagger
  * /teachers/{id}:
- *   get:
+ *   put:
+ *     description: Update a teacher
  *     security:
  *       - bearerAuth: []
- *     summary: Get a teacher by ID
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: ID of the teacher to get
+ *         description: ID of the teacher to update
  *         schema:
  *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               fullname:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *                 minLength: 8
+ *               email:
+ *                 type: string
+ *                 format: email
+ *               image:
+ *                 type: string
+ *                 format: binary
  *     responses:
  *       200:
- *         description: Successful operation
+ *         description: Updated teacher
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Teacher'
+ */
+router.put(
+  '/teachers/:id',
+  upload.single("image"),
+  isAuth,
+  isAdmin,
+  teacherController.updateTeacher
+);
+/**
+ * @swagger
+ 
+ * /teachers/change-password:
+ *   post:
+ *     description: Change the password of a teacher
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               _id:
+ *                 type: string
+ *                 description: The ID of the teacher whose password needs to be changed.
+ *               newPassword:
+ *                 type: string
+ *                 minLength: 8
+ *                 description: The new password for the teacher.
+ *     responses:
+ *       200:
+ *         description: Password changed successfully
  *       404:
  *         description: Teacher not found
+ *       500:
+ *         description: Internal server error
  */
-router.get("/teachers/:id", teacherController.findTeacherById);
-
+router.post('/teachers/change-password', isAuth, teacherController.changePassword);
 module.exports = router;
