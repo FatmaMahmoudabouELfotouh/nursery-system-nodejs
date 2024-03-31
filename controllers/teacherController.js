@@ -42,7 +42,7 @@ exports.addTeacher = async (req, res, next) => {
 exports.updateTeacher = async (req, res, next) => {
   try {
     const { fullname, password, email } = req.body;
-    const teacherId = req.params.id; // Extract id from params
+    const teacherId = req.params.id; 
 
     let updateFields = {};
     if (req.file && req.file.filename) {
@@ -57,7 +57,7 @@ exports.updateTeacher = async (req, res, next) => {
     if (email) updateFields.email = email;
 
     const updatedTeacher = await Teachers.findByIdAndUpdate(
-      teacherId, // Use teacherId extracted from params
+      teacherId, 
       updateFields,
       { new: true }
     );
