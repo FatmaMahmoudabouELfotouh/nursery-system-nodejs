@@ -88,12 +88,12 @@ exports.deleteTeacher = async (req, res, next) => {
 
 exports.changePassword = async (req, res, next) => {
   try {
-    const { id, newPassword } = req.body;
+    const { _id, newPassword } = req.body;
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
    
-    await Teachers.findByIdAndUpdate(id, { password: hashedPassword });
+    await Teachers.findByIdAndUpdate(_id, { password: hashedPassword });
 
     res.status(200).json({ message: "Password changed successfully" });
   } catch (error) {
