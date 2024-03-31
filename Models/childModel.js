@@ -9,8 +9,7 @@ const Schema = new mongoose.Schema({
     city: String,
     street: String,
     building: String,
-  },
-  image: String,
+  }
 });
 
 module.exports = mongoose.model("childerns", Schema); 
