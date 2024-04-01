@@ -98,18 +98,29 @@ router
     validator,
     teacherController.addTeacher
   )
-  /**
-   * @swagger
-   * /teachers:
-   *   delete:
-   *     security:
-   *       - bearerAuth: []
-   *     description: Delete a teacher
-   *     responses:
-   *       200:
-   *         description: Teacher deleted successfully
-   */
-  .delete(isAuth, isAdmin, teacherController.deleteTeacher);
+ /**
+ * @swagger
+ * /teachers/{id}:
+ *   delete:
+ *     security:
+ *       - bearerAuth: []
+ *     description: Delete a teacher
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID of the teacher to delete
+ *     responses:
+ *       200:
+ *         description: Teacher deleted successfully
+ *       404:
+ *         description: Teacher not found
+ *       500:
+ *         description: Internal server error
+ */
+router.delete('/teachers/:id',isAuth, isAdmin, teacherController.deleteTeacher);
 
 /**
  * @swagger
