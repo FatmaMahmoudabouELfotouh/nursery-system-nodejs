@@ -74,26 +74,26 @@ exports.updateTeacher = async (req, res, next) => {
 
 exports.deleteTeacher = async (req, res, next) => {
   try {
-    const deletedTeacher = await Teachers.findByIdAndDelete(req.body.id);
+    const id = req.params.id; 
+    const deletedTeacher = await Teachers.findByIdAndDelete(id);
     if (!deletedTeacher) {
       return res.status(404).json({ error: "Teacher not found" });
     }
-    res
-      .status(200)
-      .json({ message: "Delete Successfuly", data: deletedTeacher });
+    res.status(200).json({ message: "Delete Successfuly", data: deletedTeacher });
   } catch (error) {
     next(error);
   }
 };
 
+
 exports.changePassword = async (req, res, next) => {
   try {
-    const { _id, newPassword } = req.body;
+    const { id, newPassword } = req.body;
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
    
-    await Teachers.findByIdAndUpdate(_id, { password: hashedPassword });
+    await Teachers.findByIdAndUpdate(id, { password: hashedPassword });
 
     res.status(200).json({ message: "Password changed successfully" });
   } catch (error) {

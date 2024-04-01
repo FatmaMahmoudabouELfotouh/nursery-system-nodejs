@@ -63,7 +63,8 @@ exports.updateChild = async (req, res, next) => {
 
 exports.deleteChild = async (req, res, next) => {
   try {
-    const deletedChild = await Childerns.findByIdAndDelete(req.body._id);
+    const { id } = req.params; 
+    const deletedChild = await Childerns.findByIdAndDelete(id); 
     if (!deletedChild) {
       return res.status(404).json({ error: "Child not found" });
     }
@@ -72,6 +73,7 @@ exports.deleteChild = async (req, res, next) => {
     next(error);
   }
 };
+
 
 exports.findChildById = async (req, res, next) => {
   try {
@@ -86,26 +88,5 @@ exports.findChildById = async (req, res, next) => {
 };
 
 
-exports.deleteChild = async (req, res, next) => {
-  try {
-    const deletedChild = await Childerns.findByIdAndDelete(req.body._id);
-    if (!deletedChild) {
-      return res.status(404).json({ error: "Child not found" });
-    }
-    res.status(200).json({ message: "Delete Successfuly", data: deletedChild });
-  } catch (error) {
-    next(error);
-  }
-};
 
-exports.findChildById = async (req, res, next) => {
-  try {
-    const data = await Childerns.findById(req.params.id);
-    if (!data) {
-      return res.status(404).json({ error: "child not exist" });
-    }
-    res.status(200).json({ data: data });
-  } catch (error) {
-    next(error);
-  }
-};
+

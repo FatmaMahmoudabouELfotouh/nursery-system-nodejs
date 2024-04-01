@@ -69,7 +69,6 @@ const getClassById = async (req, res, next) => {
     next(error);
   }
 };
-
 const deleteClassById = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -84,6 +83,7 @@ const deleteClassById = async (req, res, next) => {
     next(error);
   }
 };
+
 
 const getClassChildInfo = async (req, res, next) => {
   try {
