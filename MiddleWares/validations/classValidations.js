@@ -26,7 +26,7 @@ exports.insertValidator = [
 
 exports.updateValidator = [
   body("_id")
-   
+  .optional()
     .isInt()
     .withMessage("Class ID is required and should be an integer"),
   
@@ -55,12 +55,12 @@ exports.updateValidator = [
 
 exports.deleteValidator = [
   param("id")
-    .isInt()
-    .withMessage("Class ID must be an integer")
+  .isMongoId()
+  .withMessage("Class ID must be an objectID"),
 ];
 
 exports.getByIdValidator = [
   param("id")
-    .isInt()
-    .withMessage("Class ID must be an integer")
+  .isMongoId()
+  .withMessage("Class ID must be an objectID"),
 ];

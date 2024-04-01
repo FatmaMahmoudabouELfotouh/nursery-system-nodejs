@@ -74,6 +74,9 @@ exports.updateValidator = [
       "address should be an object with { city: String, street: String, building: Numeric }"
     ),
 ];
+
+
 exports.deleteValidator = [param('id').isInt().withMessage('Child id Must be an int')];
+
 
 exports.getByIdValidator = [param('id').isInt().withMessage('Child id Must be an int')];
