@@ -39,10 +39,9 @@ app.use(morgan("dev"));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-//app.use(express.urlencoded({ extended: true }));
 
 app.use(authRoute);
-// app.use(isAuthorization);
+
 app.use(teachersRoute);
 app.use(childernsRoute);
 app.use(classRoute);
