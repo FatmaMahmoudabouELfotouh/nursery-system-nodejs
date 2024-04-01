@@ -1,6 +1,6 @@
 const Class = require("./../Models/ClassModel");
 
-const getAllClasses = async (req, res, next) => {
+exports.getAllClasses = async (req, res, next) => {
   try {
     const classes = await Class.find();
     res.status(200).json({ data: classes });
@@ -9,7 +9,7 @@ const getAllClasses = async (req, res, next) => {
   }
 };
 
-const insertClass = async (req, res, next) => {
+exports.insertClass = async (req, res, next) => {
   try {
     const { name, supervisor, children } = req.body;
     const newClass = new Class({
@@ -24,7 +24,7 @@ const insertClass = async (req, res, next) => {
   }
 };
 
-const updateClass = async (req, res, next) => {
+exports.updateClass = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { name, supervisor, children } = req.body;
@@ -42,7 +42,7 @@ const updateClass = async (req, res, next) => {
   }
 };
 
-const deleteClass = async (req, res, next) => {
+exports.deleteClass = async (req, res, next) => {
   try {
     const { id } = req.params;
     const deletedClass = await Class.findByIdAndDelete(id);
@@ -57,7 +57,7 @@ const deleteClass = async (req, res, next) => {
   }
 };
 
-const getClassById = async (req, res, next) => {
+exports.getClassById = async (req, res, next) => {
   try {
     const { id } = req.params;
     const classData = await Class.findById(id);
@@ -69,7 +69,8 @@ const getClassById = async (req, res, next) => {
     next(error);
   }
 };
-const deleteClassById = async (req, res, next) => {
+
+exports.deleteClassById = async (req, res, next) => {
   try {
     const { id } = req.params;
     const deletedClass = await Class.findByIdAndDelete(id);
@@ -84,8 +85,7 @@ const deleteClassById = async (req, res, next) => {
   }
 };
 
-
-const getClassChildInfo = async (req, res, next) => {
+exports.getClassChildInfo = async (req, res, next) => {
   try {
     const classId = req.params.id;
     const classInfo = await Class.findById(classId);
@@ -99,7 +99,7 @@ const getClassChildInfo = async (req, res, next) => {
   }
 };
 
-const getClassTeacherInfo = async (req, res, next) => {
+exports.getClassTeacherInfo = async (req, res, next) => {
   try {
     const classId = req.params.id;
     const classInfo = await Class.findById(classId);
@@ -113,13 +113,3 @@ const getClassTeacherInfo = async (req, res, next) => {
   }
 };
 
-module.exports = {
-  getAllClasses,
-  insertClass,
-  deleteClass,
-  updateClass,
-  getClassById,
-  deleteClassById,
-  getClassChildInfo,
-  getClassTeacherInfo,
-};
