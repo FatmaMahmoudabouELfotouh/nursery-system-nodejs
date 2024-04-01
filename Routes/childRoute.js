@@ -21,7 +21,7 @@ const router = express.Router();
  *       type: object
  *       properties:
  *         _id:
- *           type: string
+ *           type: interger
  *         fullname:
  *           type: string
  *         age:
@@ -89,10 +89,10 @@ router.get(
  */
 router.post(
   "/childerns",
-   isAuth, // Ensure authentication
-  isAdmin, // Ensure user is admin 
-  insertValidator, // Validate request body for insertion
-  validator, // Run validation
+   isAuth, 
+  isAdmin, 
+  insertValidator, 
+  validator, 
   childController.addChild
 );
 
@@ -117,20 +117,20 @@ router.post(
  */
 router.put(
   "/childerns",
-  isAuth, // Ensure authentication
-  isAdmin, // Ensure user is admin 
-  updateValidator, // Validate request body for updating
-  validator, // Run validation
+  isAuth, 
+  isAdmin, 
+  updateValidator, 
+  validator, 
   childController.updateChild
 );
 
 /**
  * @swagger
- * /childerns:
+ *  /childerns/{id}:
  *   delete:
  *     summary: Delete a child by ID
  *     parameters:
- *       - in: query
+ *       - in: path  
  *         name: id
  *         schema:
  *           type: integer
@@ -141,13 +141,14 @@ router.put(
  *         description: Child deleted successfully
  */
 router.delete(
-  "/childerns",
-   isAuth, // Ensure authentication
-  isAdmin, // Ensure user is admin 
-  deleteValidator, // Validate request parameters for deletion
-  validator, // Run validation
+  "/childerns/:id",
+   isAuth, 
+  isAdmin,  
+  deleteValidator, 
+  validator, 
   childController.deleteChild
 );
+
 
 /**
  * @swagger
