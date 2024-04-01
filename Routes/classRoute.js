@@ -1,11 +1,11 @@
 const express = require("express");
 const classController = require("../controllers/classController");
-const { getByIdValidator, insertValidator } = require("../MiddleWares/validations/classValidations");
+const { insertValidator, updateValidator, deleteValidator, getByIdValidator } = require("../MiddleWares/validations/classValidations");
 const validator = require("../MiddleWares/validations/validator");
-
-const router = express.Router();
 const isAuth = require("../MiddleWares/authrMW");
 const { isTeacher, isAdmin } = require("../MiddleWares/authrMW");
+
+const router = express.Router();
 
 /**
  * @swagger
@@ -15,7 +15,7 @@ const { isTeacher, isAdmin } = require("../MiddleWares/authrMW");
  *       type: object
  *       properties:
  *         _id:
- *           type: integer
+ *           type: interger
  *         name:
  *           type: string
  *         supervisor:
@@ -77,6 +77,86 @@ router.get("/class", isAuth, isAdmin, classController.getAllClasses);
  */
 router.post("/class", isAuth, isAdmin, insertValidator, validator, classController.insertClass);
 
-// Define other routes similarly
+/**
+ * @swagger
+ * /class/{id}:
+ *   put:
+ *     security:
+ *       - bearerAuth: []
+ *     summary: Update a class by ID
+ *     tags: [Class]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Class ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Class'
+ *     responses:
+ *       200:
+ *         description: The updated class
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Class'
+ */
+router.put("/class/:id", isAuth, isAdmin, updateValidator, validator, classController.updateClass);
+
+ /**
+ * @swagger
+ * /class/{id}:
+ *   delete:
+ *     security:
+ *       - bearerAuth: []
+ *     summary: Delete a class by ID
+ *     tags: [Class]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string  
+ *         description: Class ID
+ *     responses:
+ *       200:
+ *         description: Class deleted successfully
+ *       404:
+ *         description: Class not found
+ */
+router.delete("/class/:id", isAuth, isAdmin, deleteValidator, validator, classController.deleteClassById);
+
+
+/**
+ * @swagger
+ * /class/{id}:
+ *   get:
+ *     security:
+ *       - bearerAuth: []
+ *     summary: Get class by ID
+ *     tags: [Class]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Class ID
+ *     responses:
+ *       200:
+ *         description: The class data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Class'
+ *       404:
+ *         description: Class not found
+ */
+router.get("/class/:id", isAuth, getByIdValidator, validator, classController.getClassById);
 
 module.exports = router;
